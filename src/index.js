@@ -27,7 +27,10 @@ const onClickAdd = () => {
   deleteButton.innerText = "削除";
   // 削除ボタンにイベント追加
   deleteButton.addEventListener("click", () => {
-    alert("削除");
+    // 削除ボタンの親タグ(div)を取得
+    const deleteTarget = deleteButton.parentNode;
+    // deleteTargetの親要素であるdivタグから削除する
+    document.getElementById("incomplete-list").removeChild(deleteTarget);
   });
 
   // divタグの小要素に各要素を設定
