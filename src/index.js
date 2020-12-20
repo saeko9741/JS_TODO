@@ -5,19 +5,26 @@ const onClickAdd = () => {
   const inputText = document.getElementById("add-text").value;
   document.getElementById("add-text").value = " ";
 
+  createIncompleteList(inputText);
+};
+
+// 未完了リストから指定の要素を削除
+const deleteFromIncompleteList = (target) => {
+  document.getElementById("incomplete-list").removeChild(target);
+};
+
+// 未完了リストに追加する関数定義
+const createIncompleteList = (text) => {
   // div生成 (js上でhtmlのDOMを生成)
   const div = document.createElement("div");
   // <div></div>が生成され、classも付与される
   div.className = "list-row";
-
   // タグ生成
   const li = document.createElement("li");
-  li.innerText = inputText;
-
+  li.innerText = text;
   // 完了ボタンタグ生成
   const completeButton = document.createElement("button");
   completeButton.innerText = "完了";
-
   // 完了ボタンにイベント追加
   completeButton.addEventListener("click", () => {
     // 押された完了ボタンの親タグ(div)を取得し、削除
@@ -31,9 +38,19 @@ const onClickAdd = () => {
     // タグ生成
     const li = document.createElement("li");
     li.innerText = text;
+
     // 戻るボタンタグ生成
     const backButton = document.createElement("button");
     backButton.innerText = "戻す";
+    // 戻すボタンにイベント付与
+    backButton.addEventListener("click", () => {
+      const deleteTarget = backButton.parentNode;
+      // 完了リストから削除
+      document.getElementById("complete-list").removeChild(deleteTarget);
+      //テキストを取得
+      const text = backButton.parentNode.firstElementChild.innerText;
+      createIncompleteList(text);
+    });
     // divタグの子要素に各要素を追加
     addTarget.appendChild(li);
     addTarget.appendChild(backButton);
@@ -61,11 +78,6 @@ const onClickAdd = () => {
 
   // 未完了リストに追加
   document.getElementById("incomplete-list").appendChild(div);
-};
-
-// 未完了リストから指定の要素を削除
-const deleteFromIncompleteList = (target) => {
-  document.getElementById("incomplete-list").removeChild(target);
 };
 
 // // ボタンが動作しているか始めに確認
